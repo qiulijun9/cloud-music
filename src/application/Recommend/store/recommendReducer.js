@@ -6,20 +6,17 @@ const defaultState = {
   enterLoading: true,
 };
 
-export function  recommendReducer(state = defaultState, action){
-  switch(action.type) {
+export function recommendReducer(state = defaultState, action) {
+  switch (action.type) {
     case actionTypes.CHANGE_BANNER:
-      // return state.set('bannerList', action.data);
-     return produce(state, (draft) => {
-        draft.bannerList =  action.data;
+      return produce(state, (draft) => {
+        draft.bannerList = action.data;
       })
     case actionTypes.CHANGE_RECOMMEND_LIST:
-      return  action.data;
+      return action.data;
     case actionTypes.CHANGE_ENTER_LOADING:
-      // return produce(state, (draft) => {
-      //   draft.enterLoading =  action.data;
-      // })
-      return action.data;   
+      console.log(action.data)
+      return action.data;
     default:
       return state;
   }

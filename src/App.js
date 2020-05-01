@@ -1,32 +1,25 @@
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { Suspense } from 'react';
 import {GlobalStyle} from './style'
 import { IconStyle } from './assets/iconfont/iconfont';
-// import { renderRoutes } from 'react-router-config';
-// import routes from './routers/index';
-import { HashRouter ,Switch,Route,Redirect} from 'react-router-dom';
+import { Switch,Route,Redirect} from 'react-router-dom';
 import Home from './application/Home/Home';
-import Recommend from './application/Recommend/Recommend';
-import Singers from './application/Singers/Singers';
-import Rank from './application/Rank/Rank';
-import store from './store/index';
+const Recommend =  React.lazy(()=>import('./application/Recommend/Recommend'));
+const Singers = React.lazy(()=>import('./application/Singers/Singers'));
+const Rank = React.lazy(()=>import('./application/Rank/Rank'));
+
 function App() {
   return (
-    <>
-     <Provider store={store}>
-        <HashRouter>
-          <GlobalStyle></GlobalStyle>
-          <IconStyle></IconStyle>
-          <Switch>
-              <Route path="/home" component={Home} />
-              <Route path="/recommend" component={Recommend} />
-              <Route path="/singers" component={Singers} />
-              <Route path="/rank" component={Rank} />
-              <Redirect from="/" to="/home" />
-          </Switch>
-      </HashRouter>
-  </Provider>
-  </>
+    <Suspense fallback={<div>loading</div>}>
+      <GlobalStyle></GlobalStyle>
+      <IconStyle></IconStyle>
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/recommend" component={Recommend} />
+        <Route path="/singers" component={Singers} />
+        <Route path="/rank" component={Rank} />
+        <Redirect from="/" to="/home" />
+      </Switch>
+    </Suspense>
   );
 }
 
